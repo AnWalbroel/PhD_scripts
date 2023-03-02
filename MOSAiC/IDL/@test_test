@@ -1,4 +1,0 @@
-.run read_binary_data_RPG.pro
-.run prepare_rpg_training_data.pro
-prepare_rpg_training_data
-exit
