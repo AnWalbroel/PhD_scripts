@@ -1,0 +1,3 @@
+IP: 10.27.247.77
+user: admin
+password: $-mobotix
