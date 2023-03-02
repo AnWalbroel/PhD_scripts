@@ -1,0 +1,41 @@
+Important stuff to import:
+import skyfield
+import datetime as dt
+from skyfield import api
+Load a "timescale" object and set the time when you need the moon position (later has to be looped over the microwave radiometer time steps!):
+ts = api.load.timescale()
+t = ts.utc(2020, 6, 21, 12, 0, 0) # looks differently later
+Load planet objects: earth and moon (both are required!):
+eph = api.load('de421.bsp')   # always required because it contains data about the planets, i think
+earth_centre = eph['earth']
+moon = eph['moon']
+Set microwave radiometer station coordinates and elevation above mean sea level: ny_alesund_lat, ny_alesund_lon, ny_alesund_elevation
+station_mwr_nyalesund = earth_centre + api.wgs84.latlon(ny_alesund_lat, ny_alesund_lon, elevation_m=ny_alesund_elevation)
+(edited)
+
+
+
+
+
+15:47
+...
+15:47
+to be continued
+
+Andreas Walbroel  15:55
+Load moon astrophysical data: Viewpoint: station_mwr_nyalesund ... which object is observed (moon):
+moon_astro = station_mwr_nyalesund.at(t).observe(moon)
+How to get moon altitude and azimuth in a useless format:
+moon_altitude_azimuth = moon_astro.apparent().altaz()		# moon_astro.apparent().altaz()[0]: altitude, moon_astro.apparent().altaz()[1]: azimuth
+Must be converted to useful units:
+moon_alt_angle_float = skyfield.units.Angle(angle=moon_altitude_azimuth[0]).degrees
+moon_azi_angle_float = skyfield.units.Angle(angle=moon_altitude_azimuth[1]).degrees
+Of course, the procedure from above can be shortened to:
+t = api.load.timescale().utc(2020, 6, 21, 12, 0, 0)
+eph = api.load('de421.bsp')
+earth_centre = eph['earth']
+moon = eph['moon']
+station_mwr_nyalesund = earth_centre + api.wgs84.latlon(ny_alesund_lat, ny_alesund_lon, elevation_m=ny_alesund_elevation)
+moon_altitude_azimuth = station_mwr_nyalesund.at(t).observe(moon).apparent().altaz()
+moon_alt_angle_float = skyfield.units.Angle(angle=moon_altitude_azimuth[0]).degrees
+moon_azi_angle_float = skyfield.units.Angle(angle=moon_altitude_azimuth[1]).degrees

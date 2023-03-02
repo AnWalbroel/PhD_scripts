@@ -1,0 +1,11 @@
+def nc_variable_to_datetime(nc_variable):
+    """return array of naive python datetime objects (no timezone information)"""
+    units = nc_variable.units
+    try:
+        calendar = nc_variable.calendar
+    except AttributeError:
+        calendar = 'standard'
+    if units.count(', ') == 1 and units.count('.') == 2: # the radiometer software does not understand CF
+        units = units.replace(', ', ' ')
+        units = units.replace('1.1.2001', '2001-01-01')
+    return netCDF4.num2date(nc_variable[:], units, calendar, only_use_cftime_datetimes=False, only_use_python_datetimes=True)
