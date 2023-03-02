@@ -1,3 +1,0 @@
-## MRR
-2 * * * * /work/tbkoelnbonn/sorting_script_mrr/archive_data_mrr_current.sh 1>> /work/tbkoelnbonn/sorting_script_mrr/archive_data_mrr_current.log 2>> /work/tbkoelnbonn/sorting_script_mrr/archive_data_mrr_current.errors
-5 0 * * * /work/tbkoelnbonn/sorting_script_mrr/archive_data_mrr.sh 1>> /work/tbkoelnbonn/sorting_script_mrr/archive_data_mrr.log 2>> /work/tbkoelnbonn/sorting_script_mrr/archive_data_mrr.errors
